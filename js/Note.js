@@ -47,6 +47,16 @@ var Note = React.createClass({
 });
 
 var Board = React.createClass({
+  getInitialState: function () {
+    return {
+      notes: [
+        'Call Bill',
+        'Email Lisa',
+        'Make dentist appt',
+        'Send Proposal'
+      ]
+    };
+  },
   propTypes: {
     count: function (props, propName) {
       var property = props[propName];
@@ -59,7 +69,15 @@ var Board = React.createClass({
     }
   },
   render: function () {
-    return <div className="board">{this.props.count}</div>;
+    return (
+      <div className="board">
+        {this.state.notes.map(function (note, i) {
+          return (
+            <Note key={i}>{note}</Note>
+          );
+        })}
+      </div>
+    );
   }
 });
 
