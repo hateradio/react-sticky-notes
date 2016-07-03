@@ -8,12 +8,12 @@ var Note = React.createClass({
   save: function () {
     var text = this.refs.newText.getDOMNode().value;
 
-    alert("TODO: Save note value: " + text);
+    this.props.onChange(text, this.props.index);
 
     this.setState({editing: false});
   },
   remove: function () {
-    alert('removing note');
+    this.props.onRemove(this.props.index);
   },
   renderDisplay: function () {
     return (
@@ -68,14 +68,28 @@ var Board = React.createClass({
       }
     }
   },
+  update: function (text, i) {
+    var notes = this.state.notes;
+    notes[i] = text;
+    this.setState({notes: notes});
+  },
+  remove: function (i) {
+    var notes = this.state.notes;
+    notes.splice(i, 1);
+    this.setState({notes: notes});
+  },
+  eachNote: function (note, i) {
+    return (
+      <Note key={i}
+        index={i}
+        onChange={this.update}
+        onRemove={this.remove}>{note}</Note>
+    );
+  },
   render: function () {
     return (
       <div className="board">
-        {this.state.notes.map(function (note, i) {
-          return (
-            <Note key={i}>{note}</Note>
-          );
-        })}
+        {this.state.notes.map(this.eachNote)}
       </div>
     );
   }
