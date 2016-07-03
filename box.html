@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <title>Component Lifecycle!</title>
+
+        <script src="https://fb.me/react-0.13.3.min.js"></script>
+        <script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
+
+        <style type="text/css">
+          div {
+            background-color: skyblue;
+            height: 200px;
+            width: 200px;
+          }
+        </style>
+    </head>
+    <body>
+        <div id="react-container"></div>
+        <script type="text/jsx">
+          var Box = React.createClass({
+            componentWillMount: function () {
+              alert('component is about to mount');
+            },
+            componentDidMount: function () {
+              alert('component did mount');
+            },
+            render: function () {
+              return <div></div>;
+            }
+          });
+
+          React.render(<Box />, document.body);
+
+          var firstBox = document.getElementsByTagName('div')[0];
+          firstBox.addEventListener('click', function () {
+            React.unmountComponentAtNode(document.body);
+            alert('component is umounted');
+          }, false);
+        </script>
+    </body>
+</html>
