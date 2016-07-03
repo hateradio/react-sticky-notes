@@ -49,12 +49,7 @@ var Note = React.createClass({
 var Board = React.createClass({
   getInitialState: function () {
     return {
-      notes: [
-        'Call Bill',
-        'Email Lisa',
-        'Make dentist appt',
-        'Send Proposal'
-      ]
+      notes: []
     };
   },
   propTypes: {
@@ -67,6 +62,11 @@ var Board = React.createClass({
         return new Error('Creating ' + property + ' notes is ridiculous');
       }
     }
+  },
+  add: function (text) {
+    var notes = this.state.notes;
+    notes.push(text);
+    this.setState({notes: notes});
   },
   update: function (text, i) {
     var notes = this.state.notes;
@@ -90,6 +90,8 @@ var Board = React.createClass({
     return (
       <div className="board">
         {this.state.notes.map(this.eachNote)}
+        <button className="btn btn-sm btn-success glyphicon glyphicon-plus"
+          onClick={this.add.bind(null, "New Note")} />
       </div>
     );
   }
